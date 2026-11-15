@@ -1,7 +1,7 @@
 /**
  * Author: Domonick Mack
  * Date: 2026-11-15
- * Description: Global CSS rules defining the Cyberpunk / Terminal Ops dark background, subtle grid overlay, and custom neon scrollbars.
+ * Description: Global CSS rules defining the Cyberpunk / Terminal Ops theme, native dialog scroll containment, responsive container-query tables, and standard scrollbar styling.
  */
 
 @tailwind base;
@@ -10,35 +10,160 @@
 
 :root {
   color-scheme: dark;
+  --scrollbar-thumb: #00f0ff;
+  --scrollbar-track: #0a0d14;
 }
 
 body {
   background-color: #050508;
   color: #e2e8f0;
   font-family: ui-monospace, SFMono-Regular, 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
   background-size: 28px 28px;
   min-height: 100vh;
   overflow-x: hidden;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
 }
 
-/* Custom Cyberpunk Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Standard scrollbar-color and scrollbar-width for scrollable panes */
+.cyber-scroller {
+  --scrollbar-thumb: #1e3a5f;
+  --scrollbar-track: #050508;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
 }
 
-::-webkit-scrollbar-track {
-  background: #050508;
+/* Legacy fallback for WebKit/Blink browsers that do not support scrollbar-color */
+@supports not (scrollbar-color: auto) {
+  .cyber-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .cyber-scroller::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+
+  .cyber-scroller::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #162238;
-  border-radius: 2px;
+/* Native modal dialog scroll containment and backdrop styling */
+dialog:modal {
+  overscroll-behavior: contain;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(5, 5, 8, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+/* Responsive table wrapper with container queries and sticky headers */
+.table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  max-block-size: min(680px, 75vh);
+  container-type: inline-size;
+}
+
+.cyber-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  --label-2: "IMAGE";
+  --label-3: "STATE";
+  --label-4: "CPU";
+  --label-5: "MEMORY";
+  --label-6: "NETWORK I/O";
+  --label-7: "PORTS";
+  --label-8: "CONTROLS";
+}
+
+.cyber-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+}
+
+.cyber-table tbody th {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 5;
+  background-color: #0a0d14;
+}
+
+@container (width < 640px) {
+  .cyber-table,
+  .cyber-table thead,
+  .cyber-table tbody,
+  .cyber-table tr,
+  .cyber-table th,
+  .cyber-table td {
+    display: block;
+  }
+
+  .cyber-table thead {
+    display: none;
+  }
+
+  .cyber-table tbody tr {
+    margin-block-end: 1rem;
+    border: 1px solid #162238;
+    background-color: #0a0d14;
+  }
+
+  .cyber-table tbody th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    background-color: #0f1522;
+  }
+
+  .cyber-table td:nth-child(2)::before {
+    content: var(--label-2) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(3)::before {
+    content: var(--label-3) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(4)::before {
+    content: var(--label-4) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(5)::before {
+    content: var(--label-5) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(6)::before {
+    content: var(--label-6) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(7)::before {
+    content: var(--label-7) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
+
+  .cyber-table td:nth-child(8)::before {
+    content: var(--label-8) ": ";
+    color: #00f0ff;
+    font-size: 0.7rem;
+  }
 }
