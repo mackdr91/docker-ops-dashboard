@@ -1,0 +1,21 @@
+# Author: Domonick Mack
+# Date: 2026-11-15
+# Description: Docker Compose orchestration mounting the host Docker socket for local development and monitoring.
+
+services:
+  dashboard:
+    build:
+      context: .
+      target: dev
+    container_name: cyber-docker-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DOCKER_SOCKET_PATH=/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
