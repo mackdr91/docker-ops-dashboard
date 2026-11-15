@@ -5,9 +5,9 @@
   "description": "Cyberpunk / Terminal Ops real-time multi-host Docker container monitoring and lifecycle management dashboard",
   "author": "Domonick Mack",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3080",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3080",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"

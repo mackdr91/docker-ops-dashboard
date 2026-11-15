@@ -9,9 +9,10 @@ services:
       target: dev
     container_name: cyber-docker-dashboard
     ports:
-      - "3000:3000"
+      - "3080:3080"
     environment:
       - NODE_ENV=development
+      - PORT=3080
       - DOCKER_SOCKET_PATH=/var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

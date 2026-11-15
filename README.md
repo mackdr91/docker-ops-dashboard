@@ -35,7 +35,7 @@ A high-contrast **Cyberpunk / Terminal Ops** real-time Docker container monitori
 docker compose up --build
 ```
 
-The dashboard will be available at `http://localhost:3000` with access to the host Docker socket (`/var/run/docker.sock`).
+The dashboard will be available at `http://localhost:3080` with access to the host Docker socket (`/var/run/docker.sock`).
 
 ### Using Node.js Directly
 
